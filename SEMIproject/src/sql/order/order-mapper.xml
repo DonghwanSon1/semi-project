@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>주문내역관리</comment>
+	<entry key="selectOrderList">
+		SELECT ORDER_NO, STATUS_KEYWORD, PRODUCT_NAME, TOTAL_PRICE, TOTAL_QUANTITY, PHONE, RECEIVER, LOCATION
+  		  FROM ORDERS O
+  		  JOIN ORDER_STATUS ON(STATUS = STATUS_NO) 
+  		  JOIN PRODUCT ON(PNO = PRODUCT_NO)
+  	  	  JOIN ADDRESS USING(ADDRESS_NO)
+ 		 WHERE O.MEMBER_NO = ?
+	</entry>
+</properties>

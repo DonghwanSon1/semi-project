@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"  standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+
+<entry key="increaseEventCount">
+		UPDATE EVENT
+			SET COUNT = COUNT + 1
+			WHERE EVENT_NO = ?
+			AND STATUS = 'Y'
+</entry>
+		
+		
+<entry key="insertEventBoard">
+
+
+INSERT INTO EVENT(EVENT_NO, EVENT_TITLE, EVENT_CONTENT, EVENT_WRITER)
+VALUES(SEQ_ENO.NEXTVAL, ?, ?, ?)
+
+</entry>
+
+<entry key="insertEventAttachmentList">
+
+INSERT INTO EVENTATTACHMENT(FILE_NO, REF_ENO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH, FILE_LEVEL)
+VALUES(SEQ_EANO.NEXTVAL, SEQ_ENO.CURRVAL, ?, ?, ?, ?)
+
+
+</entry>
+
+<entry key="selectEventList">
+SELECT EVENT_NO, EVENT_TITLE, COUNT, FILE_PATH||CHANGE_NAME EVENTTITLEIMG
+FROM EVENT E
+JOIN EVENTATTACHMENT ON(EVENT_NO = REF_ENO)
+AND E.STATUS = 'Y'
+AND FILE_LEVEL = 1
+ORDER BY EVENT_NO DESC
+
+</entry>
+
+<entry key="selectEventBoard">
+		SELECT EVENT_NO, MEMBER_ID, EVENT_TITLE, EVENT_CONTENT
+			FROM EVENT E
+			JOIN MEMBER ON(EVENT_WRITER = MEMBER_NO)
+			WHERE EVENT_NO = ?
+			AND E.STATUS = 'Y'
+</entry>
+
+<entry key="selectEventAttachment">
+	 SELECT FILE_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH
+		FROM EVENTATTACHMENT
+		WHERE REF_ENO = ?
+
+
+</entry>
+
+<entry key="deleteEvent">
+    UPDATE EVENT
+    SET STATUS = 'N'
+    WHERE EVENT_NO = ?
+
+
+</entry>
+
+		<entry key="updateEvent">
+		UPDATE EVENT
+		SET CATEGORY_NO = ?,
+	    EVENTBOARD_TITLE = ?,
+	    EVENTBOARD_CONTENT = ?
+	    WHERE BOARD_NO = ?
+    	</entry>
+    	
+    	<entry key="updateEventAttachment">
+    	UPDATE  EVENTATTACHMENT
+				SET ORIGIN_NAME = ?,
+			    CHANGE_NAME = ?,
+			    FILE_PATH = ?,
+			    UPLOAD_DATE = SYSDATE
+			    WHERE FILE_NO = ?
+			   AND STATUS = 'Y'
+	
+	   
+    </entry>
+
+</properties>

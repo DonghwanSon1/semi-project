@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<comment>FAQ 관련 쿼리문들</comment>
+	
+	<entry key="selectCenterNoticeList">
+		SELECT *
+		FROM(SELECT 
+             ROWNUM RUNM, A.*
+              FROM (SELECT 
+                   NOTICE_NO,
+                   NOTICE_TITLE,
+                   NOTICE_CONTENT
+              FROM
+                   CENTER_NOTICE
+          ORDER BY 
+             	   NOTICE_NO DESC) A)
+	     WHERE 
+	     		RUNM BETWEEN ? AND ?
+              
+	</entry>
+	
+	<entry key="insertCenterNotice">
+		
+			INSERT INTO 
+			   			CENTER_NOTICE
+				VALUES 
+				(
+				SEQ_CNNO.NEXTVAL, 
+				?, 
+				?
+				)
+	</entry>
+
+	<entry key="deleteCenterNotice">
+		DELETE 
+		  FROM 
+		  		CENTER_NOTICE 
+		  WHERE 
+		  		NOTICE_NO = ?
+	
+	</entry>
+
+
+
+	<!--- Center -->
+	
+	<entry key="selectCenterList">
+		SELECT *
+		FROM(SELECT 
+             ROWNUM RUNM, A.*
+              FROM (SELECT CENTER_NO, CENTER_TITLE, CENTER_CONTENT, MEMBER_ID, CREATE_DATE, C.STATUS
+		FROM CENTER C, MEMBER M
+		WHERE (CENTER_WRITER = MEMBER_NO)
+		 AND MEMBER_ID = ?
+		 AND C.STATUS = 'Y'
+ 		ORDER BY 
+             	 CENTER_NO DESC) A)
+	     WHERE 
+	     		RUNM BETWEEN ? AND ?
+              
+	</entry>
+
+	<entry key="selectCenterAdminList">
+		SELECT *
+		FROM(SELECT 
+             ROWNUM RUNM, A.*
+              FROM (SELECT CENTER_NO, CENTER_TITLE, CENTER_CONTENT, MEMBER_ID, CREATE_DATE, C.STATUS
+					FROM CENTER C, MEMBER M
+					WHERE (CENTER_WRITER = MEMBER_NO)
+					 AND C.STATUS = 'Y'
+					ORDER BY 
+			             	 CENTER_NO DESC) A)
+	     WHERE 
+	     		RUNM BETWEEN ? AND ?
+	</entry>
+
+
+	<entry key="insertCenter">
+		
+			INSERT INTO 
+			   			CENTER
+				VALUES 
+				(
+				SEQ_CENO.NEXTVAL, 
+				?, 
+				?,
+				?,
+				SYSDATE,
+				'Y'
+				)
+	</entry>
+
+	<entry key="selectDetailCenter">
+		SELECT CENTER_NO, CENTER_TITLE, CENTER_CONTENT, MEMBER_ID, CREATE_DATE, C.STATUS
+		FROM CENTER C, MEMBER M
+		WHERE (CENTER_WRITER = MEMBER_NO)
+        AND CENTER_NO = ?
+		 AND C.STATUS = 'Y'
+	</entry>
+
+
+	<entry key="deleteCenter">
+		UPDATE
+			   CENTER
+		    SET
+		    	STATUS = 'N'
+		  WHERE
+		       CENTER_NO = ?
+	</entry>
+
+	
+	<entry key="updateCenter">
+		UPDATE CENTER
+   		   SET 
+       		   CENTER_TITLE = ?,
+       		   CENTER_CONTENT = ?,
+       		   CREATE_DATE = SYSDATE
+ 		 WHERE CENTER_NO = ?
+	</entry>
+
+	<entry key="selectReplyList">
+		SELECT REPLY_NO, REPLY_CONTENT, CASE WHEN REPLY_WRITER = 1 THEN '관리자' ELSE MEMBER_ID END AS MEMBER_ID , TO_CHAR(CREATE_DATE, 'YY/MM/DD HH24:MI:SS') CREATE_DATE
+          FROM CENTER_REPLY R
+  		  JOIN MEMBER ON (REPLY_WRITER = MEMBER_NO)
+ 		 WHERE R.STATUS = 'Y'
+   		   AND REF_BNO = ?
+ 		 ORDER BY CREATE_DATE DESC
+	</entry>
+
+	<entry key="insertReply">
+		INSERT INTO CENTER_REPLY(REPLY_NO, REPLY_CONTENT, REF_BNO, REPLY_WRITER)
+		VALUES (SEQ_RNO.NEXTVAL, ?,?,?)
+	
+	</entry>
+
+
+	<entry key="deleteReply">
+		DELETE 
+		  FROM 
+				CENTER_REPLY
+		 WHERE 
+		 		REPLY_NO = ?
+	</entry>
+
+	<entry key="allDeleteReply">
+		DELETE 
+		  FROM 
+				CENTER_REPLY
+		 WHERE 
+		 		REF_BNO = ?
+	</entry>
+	
+	
+	<!--  CenterInfo   -->
+	
+	
+	<entry key="selectCenterInfoList">
+		
+		SELECT *
+		FROM(SELECT 
+             ROWNUM RUNM, A.*
+             FROM (SELECT 
+                   INFO_NO,
+                   INFO_TITLE,
+                   INFO_CONTENT
+              FROM
+                   CENTER_INFO
+          ORDER BY 
+             	   INFO_NO DESC) A)
+	     WHERE 
+	     		RUNM BETWEEN ? AND ?
+		
+	</entry>
+	
+	
+	<entry key="insertCenterInfo">
+			INSERT INTO 
+			   			CENTER_INFO
+				VALUES 
+				(
+				SEQ_CINO.NEXTVAL, 
+				?, 
+				?
+				)
+	</entry>
+		
+	<entry key="deleteCenterInfo">
+		 DELETE 
+		  FROM 
+		  		CENTER_INFO 
+		  WHERE 
+		  		INFO_NO = ?
+	</entry>
+	
+	
+	<!-- page  -->
+	
+	<entry key="selectListCount">
+        SELECT 
+				COUNT(*) COUNT
+  		FROM 
+  				CENTER_NOTICE
+	</entry>
+	
+	<entry key="selectInfoListCount">
+        SELECT 
+				COUNT(*) COUNT
+  		FROM 
+  				CENTER_Info
+	</entry>
+	
+	<entry key="selectInqListCount">
+        SELECT 
+				COUNT(*) COUNT
+  		FROM 
+  				CENTER
+  		WHERE
+  			    STATUS = 'Y'
+	</entry>
+	
+
+</properties>

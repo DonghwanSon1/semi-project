@@ -1,0 +1,197 @@
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: #fff;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, legend {
+  margin: 0;
+  padding: 0;
+}
+
+input[type=text], input[type=email], input[type=submit], input[type=button] {
+ 
+  -webkit-appearance: none;
+}
+
+
+body,input,select{
+  font-family:'Noto Sans KR', sans-serif; 
+  font-style:normal; 
+  font-weight:normal; 
+  font-size:14px; 
+  line-height:1.4; 
+  color:#727272;
+}
+
+#contents {
+  min-height: 460px;
+  margin: 0 auto;
+  padding: 0 0 100px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+#container.landscape #contents {
+  width: 1200px;
+}
+
+
+#wrap {
+  width: 100%;
+  min-width: 1220px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
+#contents {
+  transition: all .7s ease-out;
+  transform-origin: 50% 50%;
+}
+
+#contents {
+ 
+  transition-delay: .2s;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.title {
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 50px;
+  
+  text-align: center;
+  letter-spacing: -0.025em;
+}
+
+
+.memberArea {
+  width: 530px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #dcdcdc;
+  font-size: 0;
+  line-height: 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.memberArea.find {
+  width: 890px;
+  padding: 50px 0;
+}
+
+dl {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.memberArea .memTit {
+  padding: 42px 0 20px;
+  text-align: center;
+}
+
+.memberArea .memTit>dt {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1;
+  color: #333;
+}
+
+.memberArea .memTit>dd {
+  padding-top: 13px;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.mt15 {
+  margin-top: 15px !important;
+}
+
+.memberArea.find .fildBox {
+  padding: 0 0px;
+}
+
+.sel{
+  margin: 8px 0;
+}
+
+.memberArea .fildBox input[type=text], .memberArea .fildBox input[type=password], .sel{
+  width: 100%;
+  height: 55px;
+  padding: 0 20px;
+  background-color: #ffff;
+  border: 1px solid #c7c7c7;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 53px;
+  color: #444754;
+  box-sizing: border-box;
+  display: block;
+}
+
+.memberArea .fildBox input + input {
+  margin-top: 7px;
+}
+
+.btnArea a, .btnArea input[type=image], .btnArea input[type=submit], .btnArea button {
+ 
+  margin: 0 10px 0 0;
+  border: none;
+  line-height: 50px;
+  text-align: center;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+
+.btnArea a.ok, .btnArea input.ok, .btnArea button.ok {
+  background-color: #f3f046;
+  color: #fff;
+  border-radius : 20px;
+  width: 100%;
+}
+
+
+
+.memberArea .btnArea>input[type=submit] {
+  width: 100%;
+  height: 55px;
+  font-size: 16px;
+}
+
+.btnArea {
+  width: 100%;
+  margin-top: 30px;
+  font-size: 0;
+  line-height: 0;
+}
+
+.memberArea.find .inBox {
+  width: 421.5px;
+  padding: 0 20px;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+}

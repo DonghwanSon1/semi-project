@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="getCartList">
+		SELECT 
+			   PRODUCT_NO, 
+			   PA.FILE_PATH||PA.CHANGE_NAME PIMG, 
+			   PRICE, 
+			   PRODUCT_NAME, 
+			   TOTAL_QUANTITY 
+  		  FROM 
+  		       CART
+  		  JOIN 
+  		       PRODUCT USING(PRODUCT_NO)
+  	 	  JOIN 
+  	 	       PRODUCTATTACHMENT PA ON(PRODUCT_NO = REF_PNO)
+ 	 	 WHERE 
+ 	 	       MEMBER_NO = ?
+   		   AND 
+   		       PA.FILE_LEVEL = 1
+	</entry>
+	
+	<entry key="updateCartQuanPlus">
+		UPDATE CART
+   		   SET TOTAL_QUANTITY = TOTAL_QUANTITY + 1
+ 		 WHERE MEMBER_NO = ?
+   		   AND PRODUCT_NO = (SELECT PRODUCT_NO
+                       		   FROM CART C
+                       		   JOIN PRODUCT P USING(PRODUCT_NO)
+                      		  WHERE PRODUCT_NAME = ?
+                        		AND MEMBER_NO = ?)
+	</entry>
+	
+	<entry key="updateCartQuanMinus">
+		UPDATE CART
+   		   SET TOTAL_QUANTITY = TOTAL_QUANTITY - 1
+ 		 WHERE MEMBER_NO = ?
+   		   AND PRODUCT_NO = (SELECT PRODUCT_NO
+                       		   FROM CART C
+                       		   JOIN PRODUCT P USING(PRODUCT_NO)
+                      		  WHERE PRODUCT_NAME = ?
+                        		AND MEMBER_NO = ?)
+	</entry>
+	
+	<entry key="getOrderlist">
+		SELECT 
+		       FILE_PATH||CHANGE_NAME PIMG, 
+		       PRODUCT_NAME, 
+		       PRICE, 
+		       TOTAL_QUANTITY
+  		  FROM 
+  		       PRODUCTATTACHMENT A
+  		  JOIN 
+  		       PRODUCT P ON(P.PRODUCT_NO = REF_PNO)
+  		  JOIN 
+  		       CART C USING(PRODUCT_NO)
+ 		 WHERE 
+ 		       MEMBER_NO = ?
+   		   AND 
+   		       PRODUCT_NAME = ?
+   		   AND 
+   		       FILE_LEVEL = 1
+	</entry>
+	
+	<entry key="getCoupons">
+		SELECT 
+			   COUPON_NAME, 
+			   DISCOUNT_PRICE
+  		  FROM 
+  		  	   COUPON
+  		  JOIN 
+  		   	   COUPONLIST USING(COUPON_NO)
+ 		 WHERE 
+ 		 	   MEMBER_NO = ?
+  		   AND 
+  		   	   STATUS = 'Y'
+	</entry>
+
+	<entry key="orderProducts">
+		INSERT 
+		  INTO 
+		       ORDERS
+		VALUES 
+		       (
+		       SEQ_ONO.NEXTVAL, 
+		       ?, 
+		       (SELECT PRODUCT_NO FROM PRODUCT WHERE PRODUCT_NAME = ?), 
+		       SYSDATE, 
+		       ?, 
+		       ?, 
+		       ?, 
+		       ?
+		       )
+	</entry>
+	
+	<entry key="updatePoint">
+		UPDATE 
+		       MEMBER
+		   SET 
+		       POINT = POINT + ?
+		 WHERE 
+		       MEMBER_NO = ?
+	</entry>
+	
+	<entry key="usingCoupon">
+		DELETE 
+		  FROM 
+		       COUPONLIST
+		 WHERE 
+		       MEMBER_NO = ?
+		   AND 
+		       COUPON_NO = (
+		                    SELECT 
+		                           COUPON_NO
+	                 		  FROM 
+	                 		       COUPON
+	                 		 WHERE 
+	                 		       COUPON_NAME = ?
+	                 	    )
+	</entry>
+	
+	<entry key="getOrderHistoryButton">
+		SELECT 
+		       ORDER_DATE, 
+		       FILE_PATH, 
+		       CHANGE_NAME, 
+		       PRODUCT_NAME, 
+		       TOTAL_QUANTITY
+		  FROM 
+		       ORDERS O
+		  JOIN 
+		       PRODUCT P ON(O.PNO = P.PRODUCT_NO)
+		  JOIN 
+		       PRODUCTATTACHMENT ON(REF_PNO = PRODUCT_NO)
+		 WHERE 
+		       MEMBER_NO = ?
+		   AND 
+		       ORDER_DATE >= ?
+		   AND 
+		       FILE_LEVEL = 1
+	</entry>
+	
+	<entry key="getOrderHistoryRange">
+		SELECT 
+		       ORDER_DATE, 
+		       FILE_PATH, 
+		       CHANGE_NAME, 
+		       PRODUCT_NAME, 
+		       TOTAL_QUANTITY
+		  FROM 
+		       ORDERS O
+		  JOIN 
+		       PRODUCT P ON(O.PNO = P.PRODUCT_NO)
+		  JOIN 
+		       PRODUCTATTACHMENT ON(REF_PNO = PRODUCT_NO)
+		 WHERE 
+		       MEMBER_NO = ?
+		   AND 
+		       ORDER_DATE >= ?
+		   AND 
+		       TO_CHAR(ORDER_DATE, 'YYYYMMDD') <![CDATA[ <= ]]> ?
+		   AND 
+		       FILE_LEVEL = 1
+	</entry>
+	
+</properties>
